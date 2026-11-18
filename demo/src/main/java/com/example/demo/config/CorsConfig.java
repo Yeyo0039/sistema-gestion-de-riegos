@@ -4,9 +4,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+// Configuración transversal de las solicitudes HTTP realizadas al backend.
 @Configuration
 public class CorsConfig implements WebMvcConfigurer {
 
+    // Permite que la interfaz local consulte los endpoints bajo /api.
+    // Las peticiones de la interfaz servida por Spring usan el mismo origen,
+    // pero estas reglas también permiten el acceso desde los hosts locales.
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**")

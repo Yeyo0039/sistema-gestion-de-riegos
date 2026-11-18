@@ -1,3 +1,4 @@
+// Muestra un único panel y actualiza sus atributos ARIA.
 export function showSection(panel, sectionName) {
     const sections = panel.querySelectorAll("[data-section-panel]");
     const selectedSection = Array.from(sections)

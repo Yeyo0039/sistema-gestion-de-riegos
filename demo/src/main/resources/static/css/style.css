@@ -331,6 +331,69 @@ textarea {
     gap: 12px;
 }
 
+.measurement-cards-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+}
+
+.measurement-record-card {
+    min-width: 0;
+    padding: 10px 12px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+}
+
+.measurement-record-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.measurement-record-heading > div {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+.measurement-record-name {
+    max-width: 100%;
+    color: #fff;
+    font-size: 0.85rem;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+}
+
+.measurement-record-date {
+    margin: 3px 0 0;
+    font-size: 0.72rem;
+}
+
+.measurement-record-values {
+    gap: 6px;
+    padding: 7px;
+}
+
+.measurement-reading-item {
+    display: grid;
+    min-width: 0;
+    align-content: center;
+    gap: 2px;
+    font-size: 0.72rem;
+    line-height: 1.2;
+}
+
+.measurement-reading-item > span:first-child {
+    color: var(--text-secondary);
+}
+
+.measurement-reading-item .medicion-val {
+    font-size: 0.9rem;
+    overflow-wrap: anywhere;
+}
+
 .metrica-box {
     text-align: center;
 }
@@ -463,6 +526,27 @@ textarea {
     background: var(--card-bg);
     border: 1px solid var(--border-color);
     border-radius: 6px;
+}
+
+.form-field input.is-invalid,
+.form-field select.is-invalid,
+.form-field textarea.is-invalid,
+.form-field input[aria-invalid="true"],
+.form-field select[aria-invalid="true"],
+.form-field textarea[aria-invalid="true"] {
+    border-color: #dc2626;
+    background-color: rgba(220, 38, 38, 0.08);
+    box-shadow: 0 0 0 1px #dc2626;
+}
+
+.form-field input.is-invalid:focus,
+.form-field select.is-invalid:focus,
+.form-field textarea.is-invalid:focus,
+.form-field input[aria-invalid="true"]:focus,
+.form-field select[aria-invalid="true"]:focus,
+.form-field textarea[aria-invalid="true"]:focus {
+    outline: 2px solid #dc2626;
+    outline-offset: 2px;
 }
 
 .form-field textarea {
@@ -625,6 +709,10 @@ textarea {
 
     .mediciones-grid {
         grid-template-columns: 1fr;
+    }
+
+    .measurement-record-values {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .section-table th,

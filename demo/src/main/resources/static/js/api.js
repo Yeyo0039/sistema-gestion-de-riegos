@@ -1,40 +1,44 @@
-async function requestJson(path, options = {}) {
-    const response = await fetch(path, {
+
+// Cliente HTTP común para todos los módulos del frontend.
+export async function requestJson(url, {
+    method = 'GET',
+    data,
+    headers = {},
+    ...options
+} = {}) {
+    // Solo se serializa un cuerpo cuando la operación recibió datos.
+    const hasBody = data !== undefined && data !== null;
+
+    const response = await fetch(url, {
         ...options,
+        method,
         headers: {
-            Accept: "application/json",
-            ...(options.body ? { "Content-Type": "application/json" } : {}),
-            ...options.headers
-        }
+            ...(hasBody ? { 'Content-Type': 'application/json' } : {}),
+            ...headers
+        },
+        ...(hasBody ? { body: JSON.stringify(data) } : {})
     });
 
-    const responseText = await response.text();
-    let data = null;
-    if (responseText) {
-        try {
-            data = JSON.parse(responseText);
-        } catch {
-            data = responseText;
-        }
-    }
+    // La respuesta puede ser JSON o texto según el endpoint.
+    const contentType = response.headers.get('content-type') || '';
 
+    const result = contentType.includes('application/json')
+        ? await response.json()
+        : await response.text();
+
+    // Convierte los errores HTTP en excepciones que cada panel puede mostrar.
     if (!response.ok) {
-        const message = data && typeof data === "object" && data.error
-            ? data.error
-            : `La API respondió con HTTP ${response.status}`;
-        throw new Error(message);
+        throw new Error(
+            result?.message || result?.error || result || `HTTP ${response.status}`
+        );
     }
 
-    return data;
+    return result;
 }
+
 
 export function getJson(path) {
     return requestJson(path);
 }
 
-export function postJson(path, body) {
-    return requestJson(path, {
-        method: "POST",
-        body: JSON.stringify(body)
-    });
-}
+export default { getJson, requestJson };
